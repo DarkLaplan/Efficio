@@ -25,6 +25,13 @@ public partial class MainWindow : Window
         ShowInTaskbar = true; // Keep in taskbar since this is the main window
         
         Opened += OnWindowOpened;
+        Deactivated += OnWindowDeactivated;
+    }
+    
+    private void OnWindowDeactivated(object? sender, EventArgs e)
+    {
+        // Close the window when it loses focus
+        Close();
     }
     
     private void OnWindowOpened(object? sender, EventArgs e)
