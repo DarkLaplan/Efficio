@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Efficio.UI.Controls"
         mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="800"
         x:Class="Efficio.UI.MainWindow"
         Title="Efficio"
@@ -13,23 +14,6 @@
         <Style Selector="Window">
             <Setter Property="BorderThickness" Value="1,0,0,0"/>
             <Setter Property="BorderBrush" Value="#3F3F46"/>
-        </Style>
-        
-        <Style Selector="Button.dockButton">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="16,12"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="0,2"/>
-            <Setter Property="Foreground" Value="#E4E4E7"/>
-        </Style>
-        
-        <Style Selector="Button.dockButton:pointerover">
-            <Setter Property="Background" Value="#2A2A2E"/>
-        </Style>
-        
-        <Style Selector="Button.dockButton:pressed">
-            <Setter Property="Background" Value="#3F3F46"/>
         </Style>
         
         <Style Selector="Button.closeButton">
@@ -45,21 +29,13 @@
             <Setter Property="Background" Value="#E81123"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
-        
-        <Style Selector="TextBlock">
-            <Setter Property="Foreground" Value="#E4E4E7"/>
-        </Style>
-        
-        <Style Selector="Separator">
-            <Setter Property="Background" Value="#3F3F46"/>
-        </Style>
     </Window.Styles>
     
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,4*,4*,2*">
         <!-- Header with close button -->
         <Border Grid.Row="0" 
                 Background="#252526"
-                BorderBrush="#3F3F46"
+                BorderBrush="#D4AF37"
                 BorderThickness="0,0,0,1"
                 Padding="8">
             <Grid ColumnDefinitions="*,Auto">
@@ -77,46 +53,13 @@
             </Grid>
         </Border>
         
-        <!-- Content area -->
-        <ScrollViewer Grid.Row="1" 
-                     Padding="8">
-            <StackPanel Spacing="8">
-                <TextBlock Text="Quick Actions" 
-                          FontWeight="SemiBold" 
-                          Margin="8,8,8,4"
-                          Foreground="#A1A1AA"/>
-                
-                <Button Classes="dockButton" 
-                        Content="📋 New Task"
-                        Click="NewTask_Click"/>
-                
-                <Button Classes="dockButton" 
-                        Content="📁 Open Project"
-                        Click="OpenProject_Click"/>
-                
-                <Button Classes="dockButton" 
-                        Content="⚙️ Settings"
-                        Click="Settings_Click"/>
-                
-                <Separator Margin="8,12"/>
-                
-                <TextBlock Text="Recent Items" 
-                          FontWeight="SemiBold" 
-                          Margin="8,8,8,4"
-                          Foreground="#A1A1AA"/>
-                
-                <Button Classes="dockButton" 
-                        Content="📄 Document 1"
-                        Click="RecentItem_Click"/>
-                
-                <Button Classes="dockButton" 
-                        Content="📄 Document 2"
-                        Click="RecentItem_Click"/>
-                
-                <Button Classes="dockButton" 
-                        Content="📄 Document 3"
-                        Click="RecentItem_Click"/>
-            </StackPanel>
-        </ScrollViewer>
+        <!-- LongTerm Tasks (40%) -->
+        <controls:LongTermTasksControl Grid.Row="1"/>
+        
+        <!-- ShortTerm Tasks (40%) -->
+        <controls:ShortTermTasksControl Grid.Row="2"/>
+        
+        <!-- Active Task (20%) -->
+        <controls:ActiveTaskControl Grid.Row="3"/>
     </Grid>
 </Window>

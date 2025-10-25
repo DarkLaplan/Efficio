@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="150"
+             x:Class="Efficio.UI.Controls.ActiveTaskControl">
+    
+    <UserControl.Styles>
+        <Style Selector="Border.activeTaskContainer">
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="BorderBrush" Value="#D4AF37"/>
+            <Setter Property="BorderThickness" Value="0,1,0,0"/>
+            <Setter Property="Padding" Value="12"/>
+        </Style>
+        
+        <Style Selector="TextBlock.taskTitle">
+            <Setter Property="Foreground" Value="#D4AF37"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        
+        <Style Selector="TextBlock.taskDescription">
+            <Setter Property="Foreground" Value="#E4E4E7"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        
+        <Style Selector="TextBlock.noTask">
+            <Setter Property="Foreground" Value="#71717A"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Styles>
+    
+    <Border Classes="activeTaskContainer">
+        <StackPanel Spacing="8">
+            <TextBlock Classes="taskTitle" 
+                      Text="Active Task"/>
+            
+            <!-- Placeholder content - will be customized later -->
+            <Border Background="#1E1E1E"
+                   BorderBrush="#3F3F46"
+                   BorderThickness="1"
+                   Padding="12"
+                   MinHeight="80">
+                <TextBlock Classes="noTask"
+                          Text="No active task"
+                          x:Name="ActiveTaskPlaceholder"/>
+            </Border>
+        </StackPanel>
+    </Border>
+</UserControl>

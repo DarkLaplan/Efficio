@@ -10,7 +10,7 @@ public partial class MainWindow : Window
 {
     private const int AnimationSteps = 30;
     private const int AnimationDelayMs = 8;
-    private const double ScreenWidthPercentage = 0.12; // 12% of screen width
+    private const double ScreenWidthPercentage = 0.20; // 20% of screen width
     
     public MainWindow()
     {
@@ -124,36 +124,9 @@ public partial class MainWindow : Window
     
     private bool _isAnimatingOut = false;
     
-    // Event handlers for UI buttons
+    // Event handler for close button
     private void CloseButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Close();
-    }
-    
-    private void NewTask_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        // Implement your new task logic here
-        System.Diagnostics.Debug.WriteLine("New Task clicked");
-    }
-    
-    private void OpenProject_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        // Implement your open project logic here
-        System.Diagnostics.Debug.WriteLine("Open Project clicked");
-    }
-    
-    private void Settings_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        // Implement your settings logic here
-        System.Diagnostics.Debug.WriteLine("Settings clicked");
-    }
-    
-    private void RecentItem_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        // Implement your recent item logic here
-        if (sender is Button button)
-        {
-            System.Diagnostics.Debug.WriteLine($"Recent item clicked: {button.Content}");
-        }
     }
 }
