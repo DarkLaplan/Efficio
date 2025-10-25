@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Efficio.Data\Efficio.Data.csproj" />
     <ProjectReference Include="..\Efficio.Background\Efficio.Background.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
 </Project>
