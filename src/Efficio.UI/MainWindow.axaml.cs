@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
+using Efficio.Core.Services;
 
 namespace Efficio.UI;
 
@@ -17,6 +18,9 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        
+        // Load tasks from files on startup
+        TaskManager.Instance.LoadTasks();
         
         // Make window borderless and non-resizable
         SystemDecorations = SystemDecorations.None;
@@ -185,5 +189,16 @@ public partial class MainWindow : Window
     private void CloseButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Close();
+    }
+    
+    // Event handler for add task button
+    private async void AddTaskButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var addTaskWindow = new AddTaskWindow
+        {
+            WindowStartupLocation = WindowStartupLocation.CenterOwner
+        };
+        
+        await addTaskWindow.ShowDialog(this);
     }
 }

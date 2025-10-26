@@ -2,8 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Efficio.Core.Models;assembly=Efficio.Core"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
-             x:Class="Efficio.UI.Controls.ShortTermTasksControl">
+             x:Class="Efficio.UI.Controls.ShortTermTasksControl"
+             x:CompileBindings="False">
     
     <UserControl.Styles>
         <Style Selector="Expander">
@@ -66,28 +68,13 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                          HorizontalScrollBarVisibility="Disabled">
                 <ListBox x:Name="ShortTermListBox"
-                        SelectionMode="Single">
-                    <!-- Placeholder items - will be data-bound later -->
-                    <ListBoxItem Content="Sample Short-term Task 1"/>
-                    <ListBoxItem Content="Sample Short-term Task 2"/>
-                    <ListBoxItem Content="Sample Short-term Task 3"/>
-                    <ListBoxItem Content="Sample Short-term Task 4"/>
-                    <ListBoxItem Content="Sample Short-term Task 5"/>
-                    <ListBoxItem Content="Sample Short-term Task 6"/>
-                    <ListBoxItem Content="Sample Short-term Task 7"/>
-                    <ListBoxItem Content="Sample Short-term Task 8"/>
-                    <ListBoxItem Content="Sample Short-term Task 9"/>
-                    <ListBoxItem Content="Sample Short-term Task 10"/>
-                    <ListBoxItem Content="Sample Short-term Task 11"/>
-                    <ListBoxItem Content="Sample Short-term Task 12"/>
-                    <ListBoxItem Content="Sample Short-term Task 13"/>
-                    <ListBoxItem Content="Sample Short-term Task 14"/>
-                    <ListBoxItem Content="Sample Short-term Task 15"/>
-                    <ListBoxItem Content="Sample Short-term Task 16"/>
-                    <ListBoxItem Content="Sample Short-term Task 17"/>
-                    <ListBoxItem Content="Sample Short-term Task 18"/>
-                    <ListBoxItem Content="Sample Short-term Task 19"/>
-                    <ListBoxItem Content="Sample Short-term Task 20"/>
+                        SelectionMode="Single"
+                        ItemsSource="{Binding ShortTermTasks}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="models:TaskItem">
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
             </ScrollViewer>
         </Border>

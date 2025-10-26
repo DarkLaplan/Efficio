@@ -2,8 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Efficio.Core.Models;assembly=Efficio.Core"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
-             x:Class="Efficio.UI.Controls.LongTermTasksControl">
+             x:Class="Efficio.UI.Controls.LongTermTasksControl"
+             x:CompileBindings="False">
     
     <UserControl.Styles>
         <Style Selector="Expander">
@@ -66,16 +68,13 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                          HorizontalScrollBarVisibility="Disabled">
                 <ListBox x:Name="LongTermListBox"
-                        SelectionMode="Single">
-                    <!-- Placeholder items - will be data-bound later -->
-                    <ListBoxItem Content="Sample Long-term Task 1"/>
-                    <ListBoxItem Content="Sample Long-term Task 2"/>
-                    <ListBoxItem Content="Sample Long-term Task 3"/>
-                    <ListBoxItem Content="Sample Long-term Task 4"/>
-                    <ListBoxItem Content="Sample Long-term Task 5"/>
-                    <ListBoxItem Content="Sample Long-term Task 6"/>
-                    <ListBoxItem Content="Sample Long-term Task 7"/>
-                    <ListBoxItem Content="Sample Long-term Task 8"/>
+                        SelectionMode="Single"
+                        ItemsSource="{Binding LongTermTasks}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="models:TaskItem">
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
             </ScrollViewer>
         </Border>

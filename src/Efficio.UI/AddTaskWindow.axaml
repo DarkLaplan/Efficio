@@ -1,0 +1,133 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+        x:Class="Efficio.UI.AddTaskWindow"
+        Title="Add New Task"
+        Width="400"
+        Height="350"
+        Background="#1E1E1E"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        SystemDecorations="BorderOnly">
+    
+    <Window.Styles>
+        <Style Selector="TextBlock.label">
+            <Setter Property="Foreground" Value="#E4E4E7"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+        
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="Foreground" Value="#E4E4E7"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        
+        <Style Selector="TextBox:focus">
+            <Setter Property="BorderBrush" Value="#D4AF37"/>
+        </Style>
+        
+        <Style Selector="ComboBox">
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="Foreground" Value="#E4E4E7"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8"/>
+        </Style>
+        
+        <Style Selector="ComboBox:focus">
+            <Setter Property="BorderBrush" Value="#D4AF37"/>
+        </Style>
+        
+        <Style Selector="Button.acceptButton">
+            <Setter Property="Background" Value="#16A34A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="24,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        <Style Selector="Button.acceptButton:pointerover">
+            <Setter Property="Background" Value="#15803D"/>
+        </Style>
+        
+        <Style Selector="Button.cancelButton">
+            <Setter Property="Background" Value="#DC2626"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="24,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        <Style Selector="Button.cancelButton:pointerover">
+            <Setter Property="Background" Value="#B91C1C"/>
+        </Style>
+    </Window.Styles>
+    
+    <Border Background="#1E1E1E" 
+            BorderBrush="#D4AF37" 
+            BorderThickness="1"
+            Padding="24">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
+            <!-- Task Name -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,16">
+                <TextBlock Classes="label" Text="Task Name:"/>
+                <TextBox x:Name="TaskNameTextBox" 
+                         Watermark="Enter task name..."
+                         MaxLength="100"/>
+            </StackPanel>
+            
+            <!-- Task Description -->
+            <StackPanel Grid.Row="1" Margin="0,0,0,16">
+                <TextBlock Classes="label" Text="Description:"/>
+                <TextBox x:Name="TaskDescriptionTextBox" 
+                         Watermark="Enter task description..."
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         Height="100"
+                         MaxLength="500"/>
+            </StackPanel>
+            
+            <!-- Task Type -->
+            <StackPanel Grid.Row="2" Margin="0,0,0,16">
+                <TextBlock Classes="label" Text="Task Type:"/>
+                <ComboBox x:Name="TaskTypeComboBox" 
+                         SelectedIndex="0"
+                         HorizontalAlignment="Stretch">
+                    <ComboBoxItem Content="Short-term"/>
+                    <ComboBoxItem Content="Long-term"/>
+                </ComboBox>
+            </StackPanel>
+            
+            <!-- Future UI Elements Placeholder -->
+            <StackPanel Grid.Row="3" Margin="0,0,0,16">
+                <!-- Reserved for future UI elements -->
+            </StackPanel>
+            
+            <!-- Spacer -->
+            <Grid Grid.Row="4"/>
+            
+            <!-- Buttons -->
+            <StackPanel Grid.Row="5" 
+                       Orientation="Horizontal" 
+                       HorizontalAlignment="Right"
+                       Spacing="12">
+                <Button Classes="cancelButton" 
+                        Content="Cancel"
+                        Click="CancelButton_Click"/>
+                <Button Classes="acceptButton" 
+                        Content="Create Task"
+                        Click="AcceptButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
