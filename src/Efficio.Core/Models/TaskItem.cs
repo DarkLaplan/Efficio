@@ -9,6 +9,7 @@ public class TaskItem
     public DateTime? DueDate { get; set; }
     public bool IsCompleted { get; set; }
     public TaskType Type { get; set; }
+    public string Notes { get; set; } = string.Empty;
 }
 
 public enum TaskType

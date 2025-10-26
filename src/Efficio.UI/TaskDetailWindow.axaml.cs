@@ -70,6 +70,7 @@ public partial class TaskDetailWindow : Window
         {
             TaskTitleText.Text = _taskTitle;
             TaskDescriptionText.Text = _taskDescription;
+            TaskNotesText.Text = task.Notes ?? string.Empty;
         });
     }
     
@@ -425,5 +426,14 @@ public partial class TaskDetailWindow : Window
     private void CloseButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         RequestCloseWithAnimation();
+    }
+    
+    // Event handler for notes text changed
+    private void TaskNotesText_TextChanged(object? sender, Avalonia.Controls.TextChangedEventArgs e)
+    {
+        if (_currentTask != null && TaskNotesText != null)
+        {
+            _currentTask.Notes = TaskNotesText.Text ?? string.Empty;
+        }
     }
 }

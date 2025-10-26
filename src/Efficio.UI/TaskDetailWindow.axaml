@@ -198,9 +198,18 @@
                 
                 <!-- Notes Section -->
                 <TextBlock Classes="sectionHeader" Text="NOTES"/>
-                <TextBlock x:Name="TaskNotesText"
-                          Classes="detailValue"
-                          Text="Additional notes and information about the task will appear here."/>
+                <TextBox x:Name="TaskNotesText"
+                         MinHeight="100"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         Background="#252526"
+                         Foreground="#E4E4E7"
+                         BorderBrush="#3F3F46"
+                         BorderThickness="1"
+                         Padding="8"
+                         FontSize="13"
+                         Watermark="Add notes about this task..."
+                         TextChanged="TaskNotesText_TextChanged"/>
             </StackPanel>
         </ScrollViewer>
         </Grid>
