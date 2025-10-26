@@ -1,0 +1,132 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="800"
+        x:Class="Efficio.UI.TaskDetailWindow"
+        Title="Task Details"
+        Background="#1E1E1E"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="True">
+    
+    <Window.Styles>
+        <Style Selector="Window">
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+        </Style>
+        
+        <Style Selector="Button.closeButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+        
+        <Style Selector="Button.closeButton:pointerover">
+            <Setter Property="Background" Value="#E81123"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style Selector="TextBlock.sectionHeader">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#D4AF37"/>
+            <Setter Property="Margin" Value="0,16,0,8"/>
+        </Style>
+        
+        <Style Selector="TextBlock.detailLabel">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="Margin" Value="0,8,0,4"/>
+        </Style>
+        
+        <Style Selector="TextBlock.detailValue">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#E4E4E7"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Window.Styles>
+    
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header with close button -->
+        <Border Grid.Row="0" 
+                Background="#252526"
+                BorderBrush="#D4AF37"
+                BorderThickness="0,0,0,1"
+                Padding="8">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" 
+                          Text="Task Details"
+                          VerticalAlignment="Center"
+                          Margin="8,0"
+                          FontWeight="SemiBold"
+                          FontSize="14"
+                          Foreground="#E4E4E7"/>
+                <Button Grid.Column="1"
+                        Classes="closeButton"
+                        Content="×"
+                        Click="CloseButton_Click"/>
+            </Grid>
+        </Border>
+        
+        <!-- Task Details Content -->
+        <ScrollViewer Grid.Row="1" 
+                     Padding="16"
+                     VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Task Title -->
+                <TextBlock Classes="sectionHeader" Text="TASK"/>
+                <TextBlock x:Name="TaskTitleText" 
+                          Classes="detailValue"
+                          FontSize="16"
+                          FontWeight="SemiBold"
+                          Text="Task Title"/>
+                
+                <!-- Description -->
+                <TextBlock Classes="sectionHeader" Text="DESCRIPTION"/>
+                <TextBlock x:Name="TaskDescriptionText"
+                          Classes="detailValue"
+                          Text="Task description will appear here. This is a placeholder for more detailed information about the selected task."/>
+                
+                <!-- Priority -->
+                <TextBlock Classes="detailLabel" Text="Priority"/>
+                <TextBlock x:Name="TaskPriorityText"
+                          Classes="detailValue"
+                          Text="Medium"/>
+                
+                <!-- Status -->
+                <TextBlock Classes="detailLabel" Text="Status"/>
+                <TextBlock x:Name="TaskStatusText"
+                          Classes="detailValue"
+                          Text="In Progress"/>
+                
+                <!-- Due Date -->
+                <TextBlock Classes="detailLabel" Text="Due Date"/>
+                <TextBlock x:Name="TaskDueDateText"
+                          Classes="detailValue"
+                          Text="Not Set"/>
+                
+                <!-- Created Date -->
+                <TextBlock Classes="detailLabel" Text="Created"/>
+                <TextBlock x:Name="TaskCreatedDateText"
+                          Classes="detailValue"
+                          Text="Not Set"/>
+                
+                <!-- Category/Type -->
+                <TextBlock Classes="detailLabel" Text="Category"/>
+                <TextBlock x:Name="TaskCategoryText"
+                          Classes="detailValue"
+                          Text="General"/>
+                
+                <!-- Notes Section -->
+                <TextBlock Classes="sectionHeader" Text="NOTES"/>
+                <TextBlock x:Name="TaskNotesText"
+                          Classes="detailValue"
+                          Text="Additional notes and information about the task will appear here."/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

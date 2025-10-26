@@ -6,15 +6,17 @@ using Avalonia.Threading;
 
 namespace Efficio.UI;
 
-public partial class MainWindow : Window
+public partial class TaskDetailWindow : Window
 {
     private const int AnimationSteps = 30;
     private const int AnimationDelayMs = 8;
-    private const double ScreenWidthPercentage = 0.20; // 20% of screen width
+    private const double ScreenWidthPercentage = 0.25; // 25% of screen width
     
-    private TaskDetailWindow? _taskDetailWindow;
+    private string _taskTitle = string.Empty;
+    private string _taskDescription = string.Empty;
+    private Window? _parentWindow;
     
-    public MainWindow()
+    public TaskDetailWindow()
     {
         InitializeComponent();
         
@@ -23,57 +25,33 @@ public partial class MainWindow : Window
         CanResize = false;
         
         // Set window properties for dock behavior
-        Topmost = true;
-        ShowInTaskbar = true; // Keep in taskbar since this is the main window
+        Topmost = false; // Don't set as topmost so MainWindow can be above it
+        ShowInTaskbar = false; // Don't show in taskbar since it's a secondary window
         
         Opened += OnWindowOpened;
-        
-        // Subscribe to task selection events
-        LongTermTasksControl.TaskSelected += OnTaskSelected;
-        ShortTermTasksControl.TaskSelected += OnTaskSelected;
-    }
-    
-    private void OnTaskSelected(object? sender, string taskTitle)
-    {
-        // Check if detail window is already open
-        bool windowIsOpen = false;
-        if (_taskDetailWindow != null)
-        {
-            try
-            {
-                // Try to access a property to see if window is still valid
-                _ = _taskDetailWindow.IsVisible;
-                windowIsOpen = true;
-            }
-            catch
-            {
-                // Window is closed or disposed
-                windowIsOpen = false;
-            }
-        }
-        
-        if (windowIsOpen && _taskDetailWindow != null)
-        {
-            // Window is already open, just update the data
-            _taskDetailWindow.SetTaskDetails(taskTitle, $"Details for: {taskTitle}\n\nThis is where more information about the task would be displayed.");
-            _taskDetailWindow.Activate(); // Bring to front if needed
-        }
-        else
-        {
-            // Create and show new detail window with animation
-            _taskDetailWindow = new TaskDetailWindow();
-            _taskDetailWindow.SetParentWindow(this);
-            _taskDetailWindow.SetTaskDetails(taskTitle, $"Details for: {taskTitle}\n\nThis is where more information about the task would be displayed.");
-            _taskDetailWindow.Show();
-        }
-        
-        // Ensure MainWindow stays on top of TaskDetailWindow
-        this.Activate();
     }
     
     private void OnWindowOpened(object? sender, EventArgs e)
     {
         SlideInFromRight();
+    }
+    
+    public void SetParentWindow(Window parentWindow)
+    {
+        _parentWindow = parentWindow;
+    }
+    
+    public void SetTaskDetails(string taskTitle, string? description = null)
+    {
+        _taskTitle = taskTitle;
+        _taskDescription = description ?? "No description available.";
+        
+        // Update the UI
+        Dispatcher.UIThread.Post(() =>
+        {
+            TaskTitleText.Text = _taskTitle;
+            TaskDescriptionText.Text = _taskDescription;
+        });
     }
     
     private async void SlideInFromRight()
@@ -90,13 +68,25 @@ public partial class MainWindow : Window
         Width = targetWidth;
         Height = targetHeight;
         
+        // Calculate target position: just to the left of the parent window (MainWindow)
+        double targetX;
+        if (_parentWindow != null)
+        {
+            // Position just to the left of the parent window
+            targetX = _parentWindow.Position.X - targetWidth;
+        }
+        else
+        {
+            // Fallback: position at a default location
+            targetX = workingArea.Right - (workingArea.Width * 0.45); // 45% from right
+        }
+        
         // Start off-screen (to the right)
         double startX = workingArea.Right;
-        double targetX = workingArea.Right - targetWidth;
         
         Position = new PixelPoint((int)startX, workingArea.Y);
         
-        // Animate with easing
+        // Animate with easing - slide in from right
         for (int i = 0; i <= AnimationSteps; i++)
         {
             double t = i / (double)AnimationSteps;
@@ -126,7 +116,7 @@ public partial class MainWindow : Window
         double endX = workingArea.Right;
         int startY = Position.Y;
         
-        // Animate with easing
+        // Animate with easing - slide out to the right
         for (int i = 0; i <= AnimationSteps; i++)
         {
             double t = i / (double)AnimationSteps;
@@ -155,19 +145,6 @@ public partial class MainWindow : Window
     // Call this method to close with animation
     protected override void OnClosing(WindowClosingEventArgs e)
     {
-        // Close the task detail window if it's open
-        if (_taskDetailWindow != null)
-        {
-            try
-            {
-                _taskDetailWindow.Close();
-            }
-            catch
-            {
-                // Window might already be closed
-            }
-        }
-        
         // Prevent immediate close if animation hasn't run
         if (!_isAnimatingOut)
         {
