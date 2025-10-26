@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
+using Efficio.Core.Models;
 using Efficio.Core.Services;
 
 namespace Efficio.UI;
@@ -37,29 +38,13 @@ public partial class MainWindow : Window
         ShortTermTasksControl.TaskSelected += OnTaskSelected;
     }
     
-    private void OnTaskSelected(object? sender, string taskTitle)
+    private void OnTaskSelected(object? sender, TaskItem task)
     {
-        // Check if detail window is already open
-        bool windowIsOpen = false;
-        if (_taskDetailWindow != null)
-        {
-            try
-            {
-                // Try to access a property to see if window is still valid
-                _ = _taskDetailWindow.IsVisible;
-                windowIsOpen = true;
-            }
-            catch
-            {
-                // Window is closed or disposed
-                windowIsOpen = false;
-            }
-        }
-        
-        if (windowIsOpen && _taskDetailWindow != null)
+        // Check if detail window is already open and valid
+        if (_taskDetailWindow != null && _taskDetailWindow.IsVisible)
         {
             // Window is already open, just update the data
-            _taskDetailWindow.SetTaskDetails(taskTitle, $"Details for: {taskTitle}\n\nThis is where more information about the task would be displayed.");
+            _taskDetailWindow.SetTaskDetails(task);
             _taskDetailWindow.Activate(); // Bring to front if needed
         }
         else
@@ -67,7 +52,11 @@ public partial class MainWindow : Window
             // Create and show new detail window with animation
             _taskDetailWindow = new TaskDetailWindow();
             _taskDetailWindow.SetParentWindow(this);
-            _taskDetailWindow.SetTaskDetails(taskTitle, $"Details for: {taskTitle}\n\nThis is where more information about the task would be displayed.");
+            _taskDetailWindow.SetTaskDetails(task);
+            
+            // Subscribe to the Closed event to clean up the reference
+            _taskDetailWindow.Closed += (s, e) => _taskDetailWindow = null;
+            
             _taskDetailWindow.Show();
         }
         
@@ -159,25 +148,33 @@ public partial class MainWindow : Window
     // Call this method to close with animation
     protected override void OnClosing(WindowClosingEventArgs e)
     {
-        // Close the task detail window if it's open
-        if (_taskDetailWindow != null)
-        {
-            try
-            {
-                _taskDetailWindow.Close();
-            }
-            catch
-            {
-                // Window might already be closed
-            }
-        }
-        
         // Prevent immediate close if animation hasn't run
         if (!_isAnimatingOut)
         {
             e.Cancel = true;
-            _isAnimatingOut = true;
-            _ = SlideOutAndClose();
+            
+            // Start animation on the UI thread
+            Dispatcher.UIThread.Post(async () =>
+            {
+                // First, close the task detail window with animation if it's open
+                if (_taskDetailWindow != null && _taskDetailWindow.IsVisible)
+                {
+                    try
+                    {
+                        await _taskDetailWindow.SlideOutAndCloseAsync();
+                    }
+                    catch
+                    {
+                        // Window might already be closed
+                    }
+                }
+                
+                // Then slide out and close the main window
+                await SlideOutAndClose();
+                _isAnimatingOut = true;
+                Close();
+            });
+            return;
         }
         
         base.OnClosing(e);

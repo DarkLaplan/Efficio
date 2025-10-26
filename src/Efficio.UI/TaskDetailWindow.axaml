@@ -29,6 +29,23 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
         
+        <Style Selector="Button.toolbarButton">
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="48"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Margin" Value="0,4"/>
+        </Style>
+        
+        <Style Selector="Button.toolbarButton:pointerover">
+            <Setter Property="Background" Value="#2A2A2E"/>
+        </Style>
+        
+        <Style Selector="Button.toolbarButton:pressed">
+            <Setter Property="Background" Value="#3F3F46"/>
+        </Style>
+        
         <Style Selector="TextBlock.sectionHeader">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -72,8 +89,66 @@
             </Grid>
         </Border>
         
+        <!-- Main content area with toolbar and details -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
+            <!-- Vertical Toolbar on the left -->
+            <Border Grid.Column="0" 
+                    Background="#1E1E1E"
+                    BorderBrush="#D4AF37"
+                    BorderThickness="0,0,1,0"
+                    Width="56">
+                <StackPanel VerticalAlignment="Top"
+                           Margin="4,8">
+                    <!-- Edit Task Button -->
+                    <Button Classes="toolbarButton"
+                            ToolTip.Tip="Edit Task">
+                        <Viewbox Width="24" Height="24">
+                            <Path Fill="#E4E4E7" 
+                                  Data="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
+                        </Viewbox>
+                    </Button>
+                    
+                    <!-- Delete Task Button -->
+                    <Button Classes="toolbarButton"
+                            ToolTip.Tip="Delete Task"
+                            Click="DeleteButton_Click">
+                        <Viewbox Width="24" Height="24">
+                            <Path Fill="#E4E4E7" 
+                                  Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+                        </Viewbox>
+                    </Button>
+                    
+                    <!-- Priority Button -->
+                    <Button Classes="toolbarButton"
+                            ToolTip.Tip="Change Priority">
+                        <Viewbox Width="24" Height="24">
+                            <Path Fill="#E4E4E7" 
+                                  Data="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </Viewbox>
+                    </Button>
+                    
+                    <!-- Duplicate Button -->
+                    <Button Classes="toolbarButton"
+                            ToolTip.Tip="Duplicate Task">
+                        <Viewbox Width="24" Height="24">
+                            <Path Fill="#E4E4E7" 
+                                  Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+                        </Viewbox>
+                    </Button>
+                    
+                    <!-- Attach File Button -->
+                    <Button Classes="toolbarButton"
+                            ToolTip.Tip="Attach File">
+                        <Viewbox Width="24" Height="24">
+                            <Path Fill="#E4E4E7" 
+                                  Data="M16.5,6V17.5A4,4 0 0,1 12.5,21.5A4,4 0 0,1 8.5,17.5V5A2.5,2.5 0 0,1 11,2.5A2.5,2.5 0 0,1 13.5,5V15.5A1,1 0 0,1 12.5,16.5A1,1 0 0,1 11.5,15.5V6H10V15.5A2.5,2.5 0 0,0 12.5,18A2.5,2.5 0 0,0 15,15.5V5A4,4 0 0,0 11,1A4,4 0 0,0 7,5V17.5A5.5,5.5 0 0,0 12.5,23A5.5,5.5 0 0,0 18,17.5V6H16.5Z"/>
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+            </Border>
+        
         <!-- Task Details Content -->
-        <ScrollViewer Grid.Row="1" 
+        <ScrollViewer Grid.Column="1" 
                      Padding="16"
                      VerticalScrollBarVisibility="Auto">
             <StackPanel>
@@ -128,5 +203,6 @@
                           Text="Additional notes and information about the task will appear here."/>
             </StackPanel>
         </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>

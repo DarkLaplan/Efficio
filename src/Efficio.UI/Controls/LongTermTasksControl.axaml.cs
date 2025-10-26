@@ -1,13 +1,14 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Efficio.Core.Models;
 using Efficio.Core.Services;
 
 namespace Efficio.UI.Controls;
 
 public partial class LongTermTasksControl : UserControl
 {
-    public event EventHandler<string>? TaskSelected;
+    public event EventHandler<TaskItem>? TaskSelected;
     
     public LongTermTasksControl()
     {
@@ -18,9 +19,9 @@ public partial class LongTermTasksControl : UserControl
     
     private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (LongTermListBox.SelectedItem is Efficio.Core.Models.TaskItem selectedTask)
+        if (LongTermListBox.SelectedItem is TaskItem selectedTask)
         {
-            TaskSelected?.Invoke(this, selectedTask.Name);
+            TaskSelected?.Invoke(this, selectedTask);
         }
     }
 }
